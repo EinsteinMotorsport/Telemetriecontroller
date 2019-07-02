@@ -1,0 +1,61 @@
+telemetriecontroller\main.o: ../Src/main.c
+telemetriecontroller\main.o: ../Inc/main.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
+telemetriecontroller\main.o: ../Inc/stm32f4xx_hal_conf.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
+telemetriecontroller\main.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+telemetriecontroller\main.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f439xx.h
+telemetriecontroller\main.o: ../Drivers/CMSIS/Include/core_cm4.h
+telemetriecontroller\main.o: D:\Program Files\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+telemetriecontroller\main.o: ../Drivers/CMSIS/Include/core_cmInstr.h
+telemetriecontroller\main.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+telemetriecontroller\main.o: ../Drivers/CMSIS/Include/core_cmFunc.h
+telemetriecontroller\main.o: ../Drivers/CMSIS/Include/core_cmSimd.h
+telemetriecontroller\main.o: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
+telemetriecontroller\main.o: D:\Program Files\Keil\ARM\ARMCC\Bin\..\include\stdio.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h
+telemetriecontroller\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+telemetriecontroller\main.o: D:\Program Files\Keil\ARM\ARMCC\Bin\..\include\stddef.h
+telemetriecontroller\main.o: ../Inc/FreeRTOSConfig.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+telemetriecontroller\main.o: ../Inc/fatfs.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FatFs/src/ff.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FatFs/src/integer.h
+telemetriecontroller\main.o: ../Inc/ffconf.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+telemetriecontroller\main.o: ../Inc/bsp_driver_sd.h
+telemetriecontroller\main.o: ../Inc/fatfs_platform.h
+telemetriecontroller\main.o: D:\Program Files\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FatFs/src/ff_gen_drv.h
+telemetriecontroller\main.o: ../Middlewares/Third_Party/FatFs/src/diskio.h
+telemetriecontroller\main.o: ../Inc/sd_diskio.h
+telemetriecontroller\main.o: D:\Program Files\Keil\ARM\ARMCC\Bin\..\include\stdbool.h
