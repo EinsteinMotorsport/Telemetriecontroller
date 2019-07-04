@@ -55,22 +55,22 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define NUMBER_OF_DATA_PUFFER 8 //NUMBER_OF_DATA_PUFFER gibt an, wie viele Arrays als Datenpuffer angelegt werden. Ein Datenpuffer hat die
-																//Laenge von 8, da eine CAN-Nachricht 8 Datenbyte hat.
-#define LENGTH_OF_PACKED_DATA 132 //LENGTH_OF_PACKED_DATA gibt an, wie lang ein Array als Datenpuffer ist. 128 Datenbyte + 2 Statusbytes 
-																	//Funkmodul + 1 Byte Length + 1 Byte CRC = 132
-#define HIGHEST_WRITE_POSITION 122 //HIGHEST_WRITE_POSITION gibt die groesstmoegliche Position an, ab dem keine neue CAN-Nachrichten in 
-																	 //das Datenpaket fuer das Funkmodul passt.
-#define NUMBER_OF_IDS 30 //NUMBER_OF_IDS gibt die Anzahl an IDs an, die im MS6 konfiguriert sind
-#define OFFSET_OF_LOWEST_ID 0x10 //OFFSET_OF_LOWEST_ID entspricht dem Wert der kleinsten ID. Die Konstante wird im Programm verwendet, um die CAN-Nachrichten zu filtern.
-#define WAIT_TIME 1000 //WAIT_TIME gibt die Zeit in Millisekunden an, die der CAN-Empfangs-Thread pausiert wird, wenn eine bestimme Anzahl
-											//an Datenpaketen (NUMBER_OF_RADIO_MODULE_MESSAGES_UNTIL_PAUSE) an das Funkmodul gesendet wurde.
-#define NUMBER_OF_RADIO_MODULE_MESSAGES_UNTIL_PAUSE 1000 //NUMBER_OF_RADIO_MODULE_MESSAGES_UNTIL_PAUSE gibt die Anzahl an eingetroffenen CAN-Nachrichten an, 
-																												 //nach denen eine Pause gestartet wird.
-#define NUMBER_OF_CONFIG_BYTES 4//NUMBER_OF_CONFIG_BYTES gibt an, wie viele Datenbyte das Paket enthaelt, das fuer die Konfiguration des CAN-Filters vom Laptop
-																//an das Funkmodul gesendet wird.
-#define START_BYTE_OF_CONFIGURATION_PACKET 0xDD //START_BYTE_OF_CONFIGURATION_PACKET entspricht dem ersten Byte des Konfigurationspakets fuer die CAN-Filterung.
-#define NUMBER_OF_BYTES_CONFIGURATION_PACKET 4 //NUMBER_OF_BYTES_CONFIGURATION_PACKET enthaelt die Anzahl an Bytes, das ein Konfigurationspaket fuer die CAN-Filterung enthaelt
+#define NUMBER_OF_DATA_PUFFER 8 /**< NUMBER_OF_DATA_PUFFER gibt an, wie viele Arrays als Datenpuffer angelegt werden. Ein Datenpuffer hat die
+																Laenge von 8, da eine CAN-Nachricht 8 Datenbyte hat.*/
+#define LENGTH_OF_PACKED_DATA 132 /**< LENGTH_OF_PACKED_DATA gibt an, wie lang ein Array als Datenpuffer ist. 128 Datenbyte + 2 Statusbytes 
+																	Funkmodul + 1 Byte Length + 1 Byte CRC = 132*/
+#define HIGHEST_WRITE_POSITION 122 /**< HIGHEST_WRITE_POSITION gibt die groesstmoegliche Position an, ab dem keine neue CAN-Nachrichten in 
+																	 das Datenpaket fuer das Funkmodul passt.*/
+#define NUMBER_OF_IDS 30 /**< NUMBER_OF_IDS gibt die Anzahl an IDs an, die im MS6 konfiguriert sind*/
+#define OFFSET_OF_LOWEST_ID 0x10 /**< OFFSET_OF_LOWEST_ID entspricht dem Wert der kleinsten ID. Die Konstante wird im Programm verwendet, um die CAN-Nachrichten zu filtern.*/
+#define WAIT_TIME 1000 /**< WAIT_TIME gibt die Zeit in Millisekunden an, die der CAN-Empfangs-Thread pausiert wird, wenn eine bestimme Anzahl
+											an Datenpaketen (NUMBER_OF_RADIO_MODULE_MESSAGES_UNTIL_PAUSE) an das Funkmodul gesendet wurde.*/
+#define NUMBER_OF_RADIO_MODULE_MESSAGES_UNTIL_PAUSE 1000 /**< NUMBER_OF_RADIO_MODULE_MESSAGES_UNTIL_PAUSE gibt die Anzahl an eingetroffenen CAN-Nachrichten an, 
+																												 nach denen eine Pause gestartet wird.*/
+#define NUMBER_OF_CONFIG_BYTES 4 /**< NUMBER_OF_CONFIG_BYTES gibt an, wie viele Datenbyte das Paket enthaelt, das fuer die Konfiguration des CAN-Filters vom Laptop
+																an das Funkmodul gesendet wird.*/
+#define START_BYTE_OF_CONFIGURATION_PACKET 0xDD /**< START_BYTE_OF_CONFIGURATION_PACKET entspricht dem ersten Byte des Konfigurationspakets fuer die CAN-Filterung.*/
+#define NUMBER_OF_BYTES_CONFIGURATION_PACKET 4 /**< NUMBER_OF_BYTES_CONFIGURATION_PACKET enthaelt die Anzahl an Bytes, das ein Konfigurationspaket fuer die CAN-Filterung enthaelt*/
 
 /* USER CODE END PD */
 
@@ -90,37 +90,37 @@ UART_HandleTypeDef huart3;
 
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
-bool packedDataWasSent; //packedDataWasSent wird verwendet, um zu speichern, ob ein Datenpaket an das Funkmodul gesendet wurde
-uint8_t packedData[8][132]; //packedData[NUMBER_OF_DATA_PUFFER][LENGTH_OF_PACKED_DATA] enthaelt die Nutzdaten, die ueber das Funkmodul versendet werden. Der Datenpuffer besteht
-														//aus 8 Arrays. Zuerst wird ein Datenpuffer beschrieben. Ist dieser voll, wird dieser Datenpuffer ueber UART an das Funkmodul versendet.
-														//Um die Nutzdaten waehrend des Sendevorgangs nicht zu ueberschreiben, werden die nachfolgenden CAN-Nachrichten in den naechsten Datenpuffer geschrieben.
+bool packedDataWasSent; /**< packedDataWasSent wird verwendet, um zu speichern, ob ein Datenpaket an das Funkmodul gesendet wurde*/
+uint8_t packedData[8][132]; /**< packedData[NUMBER_OF_DATA_PUFFER][LENGTH_OF_PACKED_DATA] enthaelt die Nutzdaten, die ueber das Funkmodul versendet werden. Der Datenpuffer besteht
+														aus 8 Arrays. Zuerst wird ein Datenpuffer beschrieben. Ist dieser voll, wird dieser Datenpuffer ueber UART an das Funkmodul versendet.
+														Um die Nutzdaten waehrend des Sendevorgangs nicht zu ueberschreiben, werden die nachfolgenden CAN-Nachrichten in den naechsten Datenpuffer geschrieben.*/
 														
-uint8_t positionPackedData; //positionPackedData wird verwendet, um die aktuelle Schreibposition in packedData zu speichern
-uint8_t selectedPackedData;	//selectedPackedData wird verwendet, um den aktuell ausgewaehlten Datenpuffer zu speichern
-uint8_t checksum; //checksum wird verwendet, um die berechnete Checksumme des Datenpakets zu speichern
-uint8_t rxDataCan[8]; //rxDataCan wird verwendet, um die Nachrichten aus dem CAN-Eingangspuffer zu speichern
-uint32_t numberCanMessages; //numberCanMessages wird verwendet, um die Anzahl der Nachrichten im CAN-Eingangspuffer zu speichern
-uint32_t counterSendPackages; //counterSendPackages zaehlt die ueber UART versendeten Datenpakete
+uint8_t positionPackedData; /**< positionPackedData wird verwendet, um die aktuelle Schreibposition in packedData zu speichern*/
+uint8_t selectedPackedData;	/**< selectedPackedData wird verwendet, um den aktuell ausgewaehlten Datenpuffer zu speichern*/
+uint8_t checksum; /**< checksum wird verwendet, um die berechnete Checksumme des Datenpakets zu speichern*/
+uint8_t rxDataCan[8]; /**< rxDataCan wird verwendet, um die Nachrichten aus dem CAN-Eingangspuffer zu speichern*/
+uint32_t numberCanMessages; /**< numberCanMessages wird verwendet, um die Anzahl der Nachrichten im CAN-Eingangspuffer zu speichern*/
+uint32_t counterSendPackages; /**< counterSendPackages zaehlt die ueber UART versendeten Datenpakete*/
 
-bool saveConfigPacketForCanFiltering; //configPacketForCanFilteringStarted gibt an, ob das erste Byte des Konfigurationspakets fuer die CAN-Filterung empfangen wurde
-uint8_t counterBytesConfigPacket; //counterBytesConfigPacket gibt an, wie viele Bytes des Konfigurationspakets fuer die CAN-Filterung empfangen wurde
+bool saveConfigPacketForCanFiltering; /**< configPacketForCanFilteringStarted gibt an, ob das erste Byte des Konfigurationspakets fuer die CAN-Filterung empfangen wurde*/
+uint8_t counterBytesConfigPacket; /**< counterBytesConfigPacket gibt an, wie viele Bytes des Konfigurationspakets fuer die CAN-Filterung empfangen wurde*/
 
-uint8_t uartReceiveData[1]; //uartReceiveData wird verwendet, um die ueber UART eintreffenden Daten zu speichern
+uint8_t uartReceiveData[1]; /**< uartReceiveData wird verwendet, um die ueber UART eintreffenden Daten zu speichern*/
 
-bool idsToSend[30]; //idsToSend wird verwendet, um zu speichern, welche IDs an das Funkmodul weitergeleitet werden sollen
-uint8_t idsToSendPosition; //idsToSendPosition wird verwendet, um die akutelle Schreibposition im Array idsToSend zu speichern
-uint8_t idsToSendConfigPacket[4]; //idsToSendConfigPacket wird verwendet, um die ueber das Funkmodul eintreffenden Konfigurationspakete zu speichern
+bool idsToSend[30]; /**< idsToSend wird verwendet, um zu speichern, welche IDs an das Funkmodul weitergeleitet werden sollen*/
+uint8_t idsToSendPosition; /**< idsToSendPosition wird verwendet, um die akutelle Schreibposition im Array idsToSend zu speichern*/
+uint8_t idsToSendConfigPacket[4]; /**< idsToSendConfigPacket wird verwendet, um die ueber das Funkmodul eintreffenden Konfigurationspakete zu speichern*/
 
-CAN_RxHeaderTypeDef rxHeader; //rxHeader wird verwendet, um die Statusinformationen der Nachrichten aus dem CAN-Eingangspuffer zu speichern
+CAN_RxHeaderTypeDef rxHeader; /**< rxHeader wird verwendet, um die Statusinformationen der Nachrichten aus dem CAN-Eingangspuffer zu speichern*/
 
-osThreadId receiveCanDataThreadHandle; //receiveCanDataThreadHandle wird verwendet, um den Thread, der die CAN-Nachrichten empfaengt, zu konfigurieren
-osThreadId saveCanMessagesThreadHandle;  //saveCanMessagesThreadHandle wird verwendet, um den Thread, der die CAN-Nachrichten auf die SD-Karte schreibt, zu konfigurieren
+osThreadId receiveCanDataThreadHandle; /**< receiveCanDataThreadHandle wird verwendet, um den Thread, der die CAN-Nachrichten empfaengt, zu konfigurieren*/
+osThreadId saveCanMessagesThreadHandle;  /**< saveCanMessagesThreadHandle wird verwendet, um den Thread, der die CAN-Nachrichten auf die SD-Karte schreibt, zu konfigurieren*/
 
-FATFS SdFatFs; //SdFatFs wird zum Einbinden der SD-Karte benoetigt.
-FIL file; //file ist der Zeiger auf die Datei, in die gerade auf der SD-Karte geschrieben wird.
-char SdPath[4]; //SdPath enthaelt Informationen fuer den Controller, wie die SD-Karte eingebunden worden ist.
-FRESULT fres; //fres enthaelt nach einem Schreibvorgang auf die SD-Karte, ob dieser erfolgreich war oder nicht
-uint32_t counterBytesWritten; //counterBytesWritten enthaelt nach einem Schreibvorgang die Anzahl der geschriebenen Zeichen
+FATFS SdFatFs; /**< SdFatFs wird zum Einbinden der SD-Karte benoetigt.*/
+FIL file; /**< file ist der Zeiger auf die Datei, in die gerade auf der SD-Karte geschrieben wird.*/
+char SdPath[4]; /**< SdPath enthaelt Informationen fuer den Controller, wie die SD-Karte eingebunden worden ist.*/
+FRESULT fres; /**< fres enthaelt nach einem Schreibvorgang auf die SD-Karte, ob dieser erfolgreich war oder nicht*/
+uint32_t counterBytesWritten; /**< counterBytesWritten enthaelt nach einem Schreibvorgang die Anzahl der geschriebenen Zeichen*/
 
 /* USER CODE END PV */
 

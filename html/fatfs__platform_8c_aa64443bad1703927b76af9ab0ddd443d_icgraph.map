@@ -1,0 +1,4 @@
+<map id="BSP_PlatformIsDetected" name="BSP_PlatformIsDetected">
+<area shape="rect" id="node2" href="$bsp__driver__sd_8c.html#abe90f483ae462df3f35f64c63d4fe932" title="Detects if SD card is correctly plugged in the memory slot or not. " alt="" coords="220,5,363,32"/>
+<area shape="rect" id="node3" href="$bsp__driver__sd_8c.html#a3d12270ffa22c857ec7a0fd9893bf881" title="Initializes the SD card device. " alt="" coords="411,5,509,32"/>
+</map>
